@@ -103,8 +103,11 @@ int busqueda(int s){
             objetivo=testObjetivo(Actual->estado);
             ++visitados;     //Con esto añadimos 1 al numero de nodos visitados
             if (!objetivo){
-                Sucesores = expandir(Actual);
-                Abiertos=Concatenar(Abiertos,Sucesores);
+                //Sucesores = expandir(Actual); 
+                //Abiertos=Concatenar(Abiertos,Sucesores);
+                Abiertos = expandir(Actual);
+                Sucesores = Concatenar(Abiertos, Sucesores);
+                
             }
         }//while
     }
