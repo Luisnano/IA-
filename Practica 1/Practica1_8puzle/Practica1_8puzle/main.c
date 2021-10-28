@@ -15,8 +15,10 @@
 
 int main(){
     int seleccion;
-    printf("Seleccione una estrategia de busqueda:\n    Anchura (1)\n   Profundidad (2)\n");
-    scanf("%d", &seleccion);
+    while (seleccion != 1 && seleccion != 2 && seleccion != 3){
+        printf("Seleccione una estrategia de busqueda:\n    Anchura (1)\n   Profundidad (2)\n   Limitada (3)\n");
+        scanf("%d", &seleccion);
+    }
     solucionFin(busqueda(seleccion));
     return 0;
 }

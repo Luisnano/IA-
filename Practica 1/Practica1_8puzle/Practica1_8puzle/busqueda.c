@@ -73,6 +73,30 @@ LISTA expandir(tNodo *nodo){
 return sucesores;
 }
 
+/* PERUVIAN ROLDAN CODE
+int estado_repetido(LISTA cerrados, tNodo* nodo)
+{
+    int res=0;
+    tNodo * aux= (tNodo*) calloc (1,sizeof(tNodo));
+    LISTA actual = cerrados;
+    
+    while(!esVacia(actual) && !res)
+    {
+        ExtraerPrimero(actual,aux,sizeof(tNodo));
+        if(iguales(aux->estado, nodo->estado))
+        {
+            res=1;
+        }
+        else
+        {
+            //siguiente(&actual, &actual);
+            actual = actual->next;
+        }
+    }
+    return res;
+}
+*/
+
 int busqueda(int s){
     int objetivo=0, visitados=0;
     tNodo *Actual=(tNodo*) calloc(1,sizeof(tNodo));
@@ -80,6 +104,7 @@ int busqueda(int s){
 
     LISTA Abiertos= VACIA;
     LISTA Sucesores= VACIA;
+    LISTA Cerrados = VACIA;
     InsertarPrimero(&Abiertos,(tNodo*) Inicial,sizeof(tNodo));
     //BUSQUEDA EN ANCHURA
     if (s==1){
@@ -95,21 +120,47 @@ int busqueda(int s){
             }
         }
     //BUSQUEDA EN PROFUNDIDAD
-    }else{
+    }
+    if(s==2){
         while (!esVacia(Abiertos) && !objetivo){
+            printf("While busqueda\n");
             Actual=(tNodo*) calloc(1,sizeof(tNodo));
             ExtraerPrimero(Abiertos,Actual, sizeof(tNodo));
             EliminarPrimero(&Abiertos);
             objetivo=testObjetivo(Actual->estado);
             ++visitados;     //Con esto añadimos 1 al numero de nodos visitados
             if (!objetivo){
+                printf("If busqueda\n");
                 //Sucesores = expandir(Actual); 
                 //Abiertos=Concatenar(Abiertos,Sucesores);
-                Abiertos = expandir(Actual);
-                Sucesores = Concatenar(Abiertos, Sucesores);
+                Sucesores = expandir(Actual);
+                Abiertos=Concatenar(Sucesores,Abiertos);
                 
             }
         }//while
+    }
+    if(s==3){
+        int limite;
+        printf("Introduzca el limite deseado: \n");
+        scanf("%d", &limite);
+         while (!esVacia(Abiertos) && !objetivo && limite != 0){
+            printf("While busqueda\n");
+            Actual=(tNodo*) calloc(1,sizeof(tNodo));
+            ExtraerPrimero(Abiertos,Actual, sizeof(tNodo));
+            EliminarPrimero(&Abiertos);
+            objetivo=testObjetivo(Actual->estado);
+            ++visitados;     //Con esto añadimos 1 al numero de nodos visitados
+            if (!objetivo){
+                printf("If busqueda\n");
+                //Sucesores = expandir(Actual); 
+                //Abiertos=Concatenar(Abiertos,Sucesores);
+                Sucesores = expandir(Actual);
+                Abiertos=Concatenar(Sucesores,Abiertos);
+                
+            }
+            --limite;        //Decrementamos el limite
+        }//while
+
     }
    
     printf("\nVisitados= %d\n", visitados);
