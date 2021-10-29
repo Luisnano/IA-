@@ -52,6 +52,17 @@ void InsertarUltimo(LISTA *c, void *n, int size){
     }
 }//InsertarUltimo
 
+LISTA cambia_posicion(LISTA lista_pasada, int n, int m){
+    //UsAMOS UN AUXILIAR PARA CAMBIAR LAS POSICIONES
+    LISTA lista_auxiliar = lista_pasada;
+    lista_auxiliar->nodo[n] = lista_pasada->nodo[m];
+    lista_pasada->nodo[m] = lista_pasada->nodo[n];
+    lista_pasada->nodo[n] = lista_auxiliar->nodo[n];
+    //lista_pasada
+    return lista_pasada;
+
+}
+
 LISTA Concatenar(LISTA c,LISTA p){
     LISTA aux;
     if (esVacia(c))

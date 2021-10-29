@@ -52,6 +52,20 @@ tNodo *nodoInicial(){
    inicial->profundidad=0;
    return inicial;
 }
+//------------------------------------PROBLEMA 1 PRACTICA 3-----------------------------------------
+//Funcion heuristica que devuelve el numero de fichas mal colocadas.
+int funcion_heuristica (tEstado *estado, tEstado *objetivo){
+    int mal_colocadas = 0;
+    int i, j;
+    for (i = 0; i < N; i++){
+        for(j = 0; j < N; j++){
+            if(estado->celdas[i][j] != objetivo->celdas[i][j]){
+                ++mal_colocadas;
+            }
+        }
+    }
+    return mal_colocadas;
+}
 
 LISTA expandir(tNodo *nodo){
     unsigned op;
@@ -59,21 +73,34 @@ LISTA expandir(tNodo *nodo){
     tNodo *nuevo=calloc(1,sizeof(tNodo));
     tEstado *s;
     for (op=1; op<=NUM_OPERADORES;op++){
-      if (esValido(op,nodo->estado)){
+        if (esValido(op,nodo->estado)){
                         //s=(tEstado *)calloc(1,sizeof(tEstado));
-          s=aplicaOperador(op,nodo->estado);
-          nuevo->estado=s;
-          nuevo->padre=nodo;
-          nuevo->operador=op;
-          nuevo->costeCamino=nodo->costeCamino + coste(op,nodo->estado);
-          nuevo->profundidad=nodo->profundidad+1;
-          InsertarUltimo(&sucesores,  (tNodo *) nuevo, (sizeof (tNodo)));
+            s=aplicaOperador(op,nodo->estado);
+            nuevo->estado=s;
+            nuevo->padre=nodo;
+            nuevo->operador=op;
+            nuevo->costeCamino=nodo->costeCamino + coste(op,nodo->estado);
+            nuevo->profundidad=nodo->profundidad+1;
+//------------------------------PROBLEMA 2 PRACTICA 3----------------------------
+            nuevo->valHeuristica = funcion_heuristica(nodo->estado, nuevo->estado);
+            InsertarUltimo(&sucesores,  (tNodo *) nuevo, (sizeof (tNodo)));
       }
   }
 return sucesores;
 }
 
-/* PERUVIAN ROLDAN CODE
+//--------------------------------PROBLEMA 3 PRACTICA 3-------------------------------------
+LISTA lista_ordenada(LISTA abiertos, LISTA sucesores){
+    LISTA ordenada = Concatenar(abiertos, sucesores);
+    //Primero tenemos que crear una funcion que intercambie los nodos que nosotros queremos de sitio
+    //La creamos en listaia
+    
+    
+
+}
+
+
+/* PERUVIAN CODE
 int estado_repetido(LISTA cerrados, tNodo* nodo)
 {
     int res=0;
