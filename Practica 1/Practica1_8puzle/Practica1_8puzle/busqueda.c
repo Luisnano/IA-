@@ -94,7 +94,14 @@ LISTA lista_ordenada(LISTA abiertos, LISTA sucesores){
     LISTA ordenada = Concatenar(abiertos, sucesores);
     //Primero tenemos que crear una funcion que intercambie los nodos que nosotros queremos de sitio
     //La creamos en listaia
-    
+    for (int i = 0; i < sizeof(ordenada); i++){
+        for (int j = i + 1; j < (sizeof(ordenada))-1; j++){
+            if (ordenada->nodo > ordenada->next){
+                ordenada = cambia_posicion(ordenada, i, j);
+            }
+        }
+    }
+
     
 
 }
