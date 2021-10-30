@@ -15,10 +15,10 @@
 
 void solucionFin(int res){
    printf("\nFin de la busqueda\n");
-    if (res)
-      printf("Se ha llegado al objetivo\n");
-   else
-      printf("No se ha llegado al objetivo\n");
+    if (res){
+        printf("Se ha llegado al objetivo\n");
+    }else{
+        printf("No se ha llegado al objetivo\n");}
 }
 void dispNodo(tNodo *nodo){
     dispEstado(nodo->estado);
@@ -31,7 +31,7 @@ void dispCamino(tNodo *nodo){
     }
     else {
         dispCamino(nodo->padre);
-         dispOperador(nodo->operador);
+        dispOperador(nodo->operador);
         dispEstado(nodo->estado);
     }
 }
@@ -92,12 +92,13 @@ return sucesores;
 //--------------------------------PROBLEMA 3 PRACTICA 3-------------------------------------
 LISTA lista_ordenada(LISTA abiertos, LISTA sucesores){
     LISTA ordenada = Concatenar(abiertos, sucesores);
+    
     //Primero tenemos que crear una funcion que intercambie los nodos que nosotros queremos de sitio
     //La creamos en listaia
     for (int i = 0; i < sizeof(ordenada); i++){
         for (int j = i + 1; j < (sizeof(ordenada))-1; j++){
-            if (ordenada->nodo > ordenada->next){
-                ordenada = cambia_posicion(ordenada, i, j);
+            if (ordenada->nodo > ordenada->next->nodo){
+                 LISTA auxiliar = cambia_posicion(ordenada, i, j);
             }
         }
     }
@@ -198,7 +199,6 @@ int busqueda(int s){
     }
    
     printf("\nVisitados= %d\n", visitados);
-    if (objetivo)
     dispSolucion(Actual);
     free(Sucesores);
     free(Inicial);

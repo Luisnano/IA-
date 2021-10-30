@@ -21,3 +21,4 @@ typedef struct NodoBusqueda_{
 
 int busqueda(int);
 void solucionFin(int res);
+LISTA lista_ordenada(LISTA abiertos, LISTA sucesores)

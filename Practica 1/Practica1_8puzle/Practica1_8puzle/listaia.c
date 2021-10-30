@@ -65,9 +65,9 @@ LISTA cambia_posicion(LISTA lista_pasada, int n, int m){
 
 LISTA Concatenar(LISTA c,LISTA p){
     LISTA aux;
-    if (esVacia(c))
+    if (esVacia(c)){
         c= p;
-    else {
+    }else {
         aux=c;
         while (aux->next!= NULL) {
             aux = aux->next;
