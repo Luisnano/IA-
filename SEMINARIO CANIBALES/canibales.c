@@ -52,6 +52,7 @@ tEstado *aplicaOperador(unsigned op, tEstado *e){
 
 int testObjetivo(tEstado *e){
 
+    //MORTYYYYYYYYYYYYYYY HAY QUE ACOTAR ME CAGO EN DIOOOOOOOOOOOOO
     return e->c_der == 3 && e->m_der == 3;
 
 }
