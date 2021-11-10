@@ -67,6 +67,26 @@ int funcion_heuristica (tEstado *estado, tEstado *objetivo){
     return mal_colocadas;
 }
 
+int manhattan_funcion_heuristica (tEstado *estado, tEstado *objetivo){
+    int distancia_objetivo[N];
+    int cuenta_objetivo = 0;
+    int i, j, n, m;
+    for (i = 0; i < N; i++){
+        for(j = 0; j < N; j++){
+            for (n = 0; n < N; n++){
+                for(m = 0; m < N; m++){
+                    if(estado->celdas[i][j]==objetivo->celdas[n][m]){
+                        distancia_objetivo[cuenta_objetivo] = (i+j)-(n-m);
+                    }
+                }
+            }       
+        }
+    }
+    return distancia_objetivo;
+}
+
+
+
 LISTA expandir(tNodo *nodo){
     unsigned op;
     LISTA sucesores=VACIA;
@@ -108,7 +128,7 @@ LISTA lista_ordenada(LISTA abiertos, LISTA sucesores){
 }
 
 
-/* PERUVIAN CODE
+
 int estado_repetido(LISTA cerrados, tNodo* nodo)
 {
     int res=0;
@@ -130,7 +150,6 @@ int estado_repetido(LISTA cerrados, tNodo* nodo)
     }
     return res;
 }
-*/
 
 int busqueda(int s){
     int objetivo=0, visitados=0;
@@ -205,4 +224,84 @@ int busqueda(int s){
     free(Actual);
     return objetivo;
 }
+int busqueda_voraz(){
+
+
+    int objetivo=0, visitados=0;
+
+    tNodo Actual=(tNodo) calloc(1,sizeof(tNodo));
+    tNodo *Inicial=nodoInicial();
+
+    LISTA Abiertos= VACIA;
+    LISTA Sucesores= VACIA;
+    LISTA Cerrados= VACIA;
+    InsertarPrimero(&Abiertos, Inicial,sizeof(tNodo));
+    while (!esVacia(Abiertos) && !objetivo && estado_repetido(Cerrados,Actual)==0){
+
+        Actual=(tNodo*) calloc(1,sizeof(tNodo));
+        ExtraerPrimero(Abiertos,Actual, sizeof(tNodo));
+
+        EliminarPrimero(&Abiertos);
+
+        objetivo=testObjetivo(Actual->estado);
+
+        //dispOperador(Actual->operador);
+        //dispEstado(Actual->estado);
+        if (!objetivo){
+            Sucesores = expandir(Actual);
+            Abiertos=Ordenar_lista_voraz(Abiertos,Sucesores);
+            visitados++;
+        }
+    }
+
+    printf("\nVisitados= %d\n", visitados);
+    if (objetivo)
+        dispSolucion(Actual);
+    free(Sucesores);
+    free(Inicial);
+    free(Actual);
+    return objetivo;
+}
+
+/* ---------------- FUNCION BUSQUEDA A* --------------- */
+
+int busqueda_A_estrella(){
+    int objetivo=0, visitados=0;
+
+    tNodo Actual=(tNodo) calloc(1,sizeof(tNodo));
+    tNodo *Inicial=nodoInicial();
+
+    LISTA Abiertos= VACIA;
+    LISTA Sucesores= VACIA;
+    LISTA Cerrados= VACIA;
+
+    InsertarPrimero(&Abiertos, Inicial,sizeof(tNodo));
+
+    while (!esVacia(Abiertos) && !objetivo && estado_repetido(Cerrados,Actual)==0){
+
+        Actual=(tNodo*) calloc(1,sizeof(tNodo));
+        ExtraerPrimero(Abiertos,Actual, sizeof(tNodo));
+
+        EliminarPrimero(&Abiertos);
+
+        objetivo=testObjetivo(Actual->estado);
+
+        //dispOperador(Actual->operador);
+        //dispEstado(Actual->estado);
+        if (!objetivo){
+            Sucesores = expandir(Actual);
+            Abiertos=Ordenar_lista_A_estrella(Abiertos,Sucesores);
+            visitados++;
+        }
+    }//while
+
+    printf("\nVisitados= %d\n", visitados);
+    if (objetivo)
+        dispSolucion(Actual);
+    free(Sucesores);
+    free(Inicial);
+    free(Actual);
+    return objetivo;
+}
+
 
