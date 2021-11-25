@@ -229,7 +229,7 @@ int busqueda_voraz(){
 
     int objetivo=0, visitados=0;
 
-    tNodo Actual=(tNodo) calloc(1,sizeof(tNodo));
+    tNodo Actual=(tNodo*) calloc(1,sizeof(tNodo));
     tNodo *Inicial=nodoInicial();
 
     LISTA Abiertos= VACIA;
